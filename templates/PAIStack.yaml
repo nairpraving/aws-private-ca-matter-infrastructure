@@ -1,7 +1,8 @@
 Parameters:
-  productId:
-    Type: String
-    Description: The product ID associated with this PAI
+#  productId:
+#    Type: String
+#    Description: The product ID associated with this PAI
+# Updated to remove ACL error and remove PID, Org and OrgUnit from PIA CA - future will make it optional
   vendorId:
     Type: String
     Description: The vendorId associated with this PAI
@@ -17,12 +18,12 @@ Parameters:
   paiCommonName:
     Type: String
     Description: The Common Name for this PAI
-  paiOrganization:
-    Type: String
-    Description: The Organization associated with this PAI
-  paiOU:
-    Type: String
-    Description: The Organizational Unit associated with this PAI
+#  paiOrganization:
+#    Type: String
+#    Description: The Organization associated with this PAI
+#  paiOU:
+#    Type: String
+#    Description: The Organizational Unit associated with this PAI
 Resources:
   PaaPemMatterStackPAI9E94FD8B:
     Type: Custom::AWS
@@ -126,15 +127,15 @@ Resources:
           - ObjectIdentifier: 1.3.6.1.4.1.37244.2.1
             Value:
               Ref: vendorId
-          - ObjectIdentifier: 1.3.6.1.4.1.37244.2.2
-            Value:
-              Ref: productId
-          - ObjectIdentifier: 2.5.4.10
-            Value:
-              Ref: paiOrganization
-          - ObjectIdentifier: 2.5.4.11
-            Value:
-              Ref: paiOU
+#          - ObjectIdentifier: 1.3.6.1.4.1.37244.2.2
+#            Value:
+#              Ref: productId
+#          - ObjectIdentifier: 2.5.4.10
+#            Value:
+#              Ref: paiOrganization
+#          - ObjectIdentifier: 2.5.4.11
+#            Value:
+#              Ref: paiOU
       Type: SUBORDINATE
       KeyStorageSecurityStandard: FIPS_140_2_LEVEL_3_OR_HIGHER
       Tags:
@@ -361,7 +362,7 @@ Resources:
   DacInputS3ToSQSS3LoggingBucket92EDF008:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: LogDeliveryWrite
+#      AccessControl: LogDeliveryWrite
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -1234,7 +1235,7 @@ Resources:
                   - Arn
               - Fn::Join:
                   - ""
-                  - - Fn::GetAtt:
+                  - - Fn::GetAtt:GetBucketAcl
                         - matterpkiauditlogsB56DAB62
                         - Arn
                     - /*
@@ -1497,8 +1498,8 @@ Outputs:
         - ""
         - - VID=
           - Ref: vendorId
-          - " PID="
-          - Ref: productId
+#          - " PID="
+#          - Ref: productId
           - " CN="
           - Ref: paiCommonName
           - " "
